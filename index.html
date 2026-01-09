@@ -4,14 +4,18 @@
   <meta charset="utf-8" />
   <title>Service NSW</title>
 
-  <!-- Fullscreen, correct scaling on iPhone and Android -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#F5F5F5" />
+  <!-- Lock scale and behave like an installed web app -->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+  />
+  <meta name="theme-color" content="#0B2E5B" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Service NSW" />
 
-  <link rel="apple-touch-icon" href="icon.png" />
+  <!-- Home Screen icon -->
+  <link rel="apple-touch-icon" href="icon.png.png" />
 
   <style>
     html, body {
@@ -20,120 +24,53 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background: #F5F5F5; /* match ProtoPie bgColor to avoid any "white border" */
+      background: #0B2E5B;
       -webkit-text-size-adjust: 100%;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
     }
 
-    /* Ensure the iframe truly fills the viewport on all phones */
-    iframe {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      border: 0;
-      display: block;
-      background: #F5F5F5;
-    }
-
-    /* iOS safe area padding support, without introducing borders */
-    .frameWrap {
+    /* Safe-area aware full screen wrapper */
+    .wrap {
       position: fixed;
       top: env(safe-area-inset-top);
       left: env(safe-area-inset-left);
       right: env(safe-area-inset-right);
       bottom: env(safe-area-inset-bottom);
-      background: #F5F5F5;
+      background: #0B2E5B;
     }
 
-    .frameWrap iframe {
+    /* Full screen image */
+    img {
       width: 100%;
       height: 100%;
-    }
-
-    /* Privacy overlay */
-    #privacyShield {
-      position: fixed;
-      inset: 0;
-      background: #F5F5F5;
-      display: none;
-      z-index: 999999;
-      align-items: center;
-      justify-content: center;
+      display: block;
+      object-fit: cover;
+      object-position: top;
       pointer-events: none;
-    }
-
-    #privacyShield.show {
-      display: flex;
-    }
-
-    #privacyShield img {
-      max-width: 65%;
-      max-height: 65%;
-      object-fit: contain;
     }
   </style>
 </head>
 
 <body>
-
-  <!-- Safe-area aware wrapper prevents "gaps" and keeps full-bleed -->
-  <div class="frameWrap">
-    <iframe
-      src="https://cloud.protopie.io/p/08486ecc7ff23a4485d09ed8?ui=false&scaleToFit=false&enableHotspotHints=false&cursorType=touch&mockup=false&bgColor=%23F5F5F5&playSpeed=1"
-      allow="fullscreen"
-      loading="eager"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
-  </div>
-
-  <div id="privacyShield" aria-hidden="true">
-    <img src="privacy.png" alt="Service NSW Privacy Screen" />
+  <div class="wrap">
+    <!-- Your screenshot -->
+    <img src="screen.png" alt="Service NSW screen" />
   </div>
 
   <script>
-    const shield = document.getElementById('privacyShield');
-
-    function showShield() {
-      shield.classList.add('show');
-      shield.setAttribute('aria-hidden', 'false');
-    }
-
-    function hideShield() {
-      shield.classList.remove('show');
-      shield.setAttribute('aria-hidden', 'true');
-    }
-
-    // Arm privacy logic only after page has fully settled
-    let armed = false;
-    window.addEventListener('load', () => {
-      setTimeout(() => { armed = true; }, 1200);
-    });
-
-    // Show ONLY when page is actually backgrounded
-    document.addEventListener('visibilitychange', () => {
-      if (!armed) return;
-      if (document.hidden) {
-        showShield();
-      } else {
-        hideShield();
-      }
-    });
-
-    // iOS lifecycle events
-    window.addEventListener('pagehide', () => {
-      if (!armed) return;
-      showShield();
-    });
-
-    window.addEventListener('pageshow', () => {
-      if (!armed) return;
-      hideShield();
-    });
-
-    // Ensure hidden on first render
-    hideShield();
+    // Prevent double-tap zoom on iOS
+    let lastTouchEnd = 0;
+    document.addEventListener(
+      'touchend',
+      function (e) {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) e.preventDefault();
+        lastTouchEnd = now;
+      },
+      { passive: false }
+    );
   </script>
-
 </body>
 </html>
