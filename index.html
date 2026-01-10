@@ -29,7 +29,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #000;
+      background-color: #F5F5F5;
       overflow: hidden;
       width: 100vw;
       height: 100vh;
@@ -47,12 +47,10 @@
       position: absolute;
       top: 0;
       left: 0;
-      /* Pull up into the top safe area */
-      margin-top: calc(-1 * env(safe-area-inset-top));
-      /* Extend down into the bottom safe area */
-      margin-bottom: calc(-1 * env(safe-area-inset-bottom));
-      /* Increase height to fill all safe areas */
-      height: calc(100vh + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+      /* Force it to extend beyond viewport */
+      height: 110vh;
+      /* Pull it up to hide any top overflow */
+      transform: translateY(-5vh);
     }
   </style>
 </head>
