@@ -33,7 +33,6 @@
       overflow: hidden;
       width: 100vw;
       height: 100vh;
-      /* This is key - push content up behind the status bar */
       position: fixed;
       top: 0;
       left: 0;
@@ -44,15 +43,16 @@
     iframe {
       border: none;
       width: 100%;
-      height: 100%;
       display: block;
       position: absolute;
       top: 0;
       left: 0;
-      /* Extend into safe areas */
+      /* Pull up into the top safe area */
       margin-top: calc(-1 * env(safe-area-inset-top));
-      /* Increase height to compensate */
-      height: calc(100% + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+      /* Extend down into the bottom safe area */
+      margin-bottom: calc(-1 * env(safe-area-inset-bottom));
+      /* Increase height to fill all safe areas */
+      height: calc(100vh + env(safe-area-inset-top) + env(safe-area-inset-bottom));
     }
   </style>
 </head>
