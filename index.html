@@ -40,14 +40,12 @@
     iframe {
       border: none;
       width: 100%;
+      height: 100%;
       display: block;
       position: absolute;
       left: 0;
-      /* Push down from top instead of pulling up */
+      /* Pin to bottom so content fills from bottom up */
       bottom: 0;
-      /* Extend beyond viewport upward */
-      height: 110vh;
-      /* No transform needed - it naturally extends up */
     }
   </style>
 </head>
