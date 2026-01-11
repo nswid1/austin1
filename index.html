@@ -3,16 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <title>Service NSW</title>
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
   />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
   <link rel="apple-touch-icon" href="icon.png.png" />
-
   <style>
     * {
       margin: 0;
@@ -45,20 +42,18 @@
       width: 100%;
       display: block;
       position: absolute;
-      top: 0;
       left: 0;
-      /* Force it to extend beyond viewport */
+      /* Push down from top instead of pulling up */
+      bottom: 0;
+      /* Extend beyond viewport upward */
       height: 110vh;
-      /* Pull it up to hide any top overflow */
-      transform: translateY(-5vh);
+      /* No transform needed - it naturally extends up */
     }
   </style>
 </head>
 <body>
-
   <iframe 
     src="https://cloud.protopie.io/p/81cb6e584bcf056db63fab5e?ui=false&scaleToFit=true&enableHotspotHints=false&cursorType=touch&mockup=false&bgColor=%23F5F5F5&bgImage=undefined&playSpeed=1"
   ></iframe>
-
 </body>
 </html>
