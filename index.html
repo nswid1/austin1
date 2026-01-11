@@ -29,7 +29,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #FFFFFF;
+      background-color: #141416;
       overflow: hidden;
       width: 100vw;
       height: 100vh;
@@ -47,10 +47,9 @@
       position: absolute;
       top: 0;
       left: 0;
-      /* Force it to extend beyond viewport */
       height: 110vh;
-      /* Pull it up to hide any top overflow */
-      transform: translateY(-5vh);
+      /* Remove the upward translation so bar stays at top */
+      transform: translateY(0);
     }
   </style>
 </head>
