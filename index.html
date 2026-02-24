@@ -3,22 +3,19 @@
 <head>
   <meta charset="utf-8">
   <title>Service NSW</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ffffff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Service NSW">
-
   <link rel="apple-touch-icon" href="icon.png.png">
-
   <style>
     body {
       margin: 0;
-      background: #ffffff;
+      background: #000;
       overflow: hidden;
+      height: 100vh;
     }
-
     iframe {
       position: fixed;
       inset: 0;
@@ -27,35 +24,81 @@
       border: 0;
       background: #ffffff;
     }
-
-    /* Privacy overlay */
     #privacyShield {
       position: fixed;
       inset: 0;
-      background: #ffffff;
+      background: #000000;
       display: none;
       z-index: 999999;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
       align-items: center;
+      -webkit-justify-content: center;
       justify-content: center;
       pointer-events: none;
     }
-
     #privacyShield.show {
+      display: -webkit-flex;
       display: flex;
     }
-
     #privacyShield img {
-      max-width: 65%;
-      max-height: 65%;
+      max-width: 70%;
+      max-height: 70%;
       object-fit: contain;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      margin: auto;
+    }
+    #privacyShield.show img {
+      opacity: 1;
     }
   </style>
 </head>
-
 <body>
 
   <iframe
     src="https://cloud.protopie.io/p/dd5e703bd227f43bab122552?ui=false&scaleToFit=true&enableHotspotHints=false&cursorType=touch&mockup=false&bgColor=%23F5F5F5&bgImage=undefined&playSpeed=1">
   </iframe>
+
+  <div id="privacyShield">
+    <img src="service-nsw-privacy-shield.png" alt="Service NSW">
+  </div>
+
+  <script>
+    // Preload the image so it shows instantly
+    const preloadImg = new Image();
+    preloadImg.src = "service-nsw-privacy-shield.png";
+
+    const shield = document.getElementById('privacyShield');
+
+    function showShield() {
+      shield.classList.add('show');
+    }
+
+    function hideShield() {
+      shield.classList.remove('show');
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        showShield();
+      } else if (document.visibilityState === 'visible') {
+        hideShield();
+      }
+    });
+
+    window.addEventListener('blur', showShield);
+    window.addEventListener('focus', hideShield);
+    window.addEventListener('pagehide', showShield);
+
+    // iOS-specific safety check
+    setTimeout(() => {
+      if (document.hidden || document.visibilityState === 'hidden') {
+        showShield();
+      }
+    }, 100);
+  </script>
+
 </body>
 </html>
